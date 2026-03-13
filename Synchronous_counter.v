@@ -1,0 +1,33 @@
+module Synchronous_counter (clk,clr,pre,state);
+input clk;
+input [2:0] clr,pre;
+output wire [2:0] state;
+
+wire D2,D1,D0;
+wire a,b,c,d,e,f;
+wire state0_not , state1_not, state2_not ;
+
+not State0bar (state0_not,state[0]);
+not State1bar (state1_not,state[1]);
+not State2bar (state2_not,state[2]);
+
+// mo ta ngo vao D0
+and inst0(a,state[2],state[1],state[0]);
+and inst1 (b,state[2],state1_not,state0_not);
+and inst2 (c,state2_not,state[1],state0_not);
+or d0 (D0,a,b,c);
+
+// mo ta ngo vao D1
+and inst3 (d, state[2],state[0]);
+and inst4 (e, state2_not,state0_not);
+or d1 (D1,state1_not,d,e);
+
+// mo ta ngo vao D2
+and inst5 ( f,state2_not,state1_not);
+or d2 (D2,state0_not,f);
+
+// Goi 3 module my_dff 
+my_dff inst6 (.clk(clk),.D(D0), .clr(clr[0]),.pre(pre[0]),.Q(state[0]),.Qbar());
+my_dff inst7 (.clk(clk),.D(D1), .clr(clr[1]),.pre(pre[1]),.Q(state[1]),.Qbar());
+my_dff inst8 (.clk(clk),.D(D2), .clr(clr[2]),.pre(pre[2]),.Q(state[2]),.Qbar());
+endmodule
