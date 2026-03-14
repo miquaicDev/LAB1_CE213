@@ -1,0 +1,23 @@
+module file_cell (in,ws,clk,rsa,rsb,A,B);
+input in,ws,clk,rsa,rsb,A,B;
+wire w0;
+output A,B
+always @(*) begin 
+if (ws==1'b1)
+ w0<=in;
+else 
+ w0<=w0;
+end
+always (posedge clk) begin 
+if(rsa==1'b1)
+	A=w0;
+else if (rsb=1'b1)
+	B=w0;
+else
+{
+	A=1'bz;
+	B=1'bz;
+}
+end
+endmodule;
+

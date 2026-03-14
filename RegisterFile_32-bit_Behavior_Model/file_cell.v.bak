@@ -1,0 +1,7 @@
+module reg_file_32bit (RA1,RA2,RWE,WA,Wd,Rd1,Rd2);
+input reg [4:0] RA1,RA2,WA;
+input reg Wd [31:0];
+input wire RWE;
+output reg [31:0] Rd1, Rd2;
+
+endmodule
