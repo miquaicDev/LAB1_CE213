@@ -1,0 +1,27 @@
+// D-ff dua tren nguyen ly Master-slave gom 2 D-latch noi tiep
+module my_dff (clk,D,clr,pre,Q,Qbar);
+input clk,D,clr,pre;
+output Q,Qbar;
+wire mst,mstbar,clkbar;
+not (clkbar,clk);
+// D-Latch 1 (Master): Nhan du lieu D khi xung clock o muc thap (0)
+D_latch_clocked d0 (clkbar,D,clr,pre,mst,mstbar);
+// D-Latch 2 (Slave): Day du lieu ra Q khi xung clock lên muc cao (1)
+D_latch_clocked d1 (clk,mst,clr,pre,Q,Qbar);
+endmodule
+
+module D_latch_clocked (clk,D,clr,pre,Q,Qbar);
+input clk,D,clr,pre;
+output Q,Qbar;
+wire Dbar;
+wire X,Y;
+not D_not  (Dbar,D);
+
+nand inst0 (X, D, clk, clr);
+nand inst1 (Y, Dbar, clk, pre);
+
+nand inst2  (Q, X, Qbar, pre);
+nand inst3 (Qbar, Y, Q, clr);
+
+endmodule
+
