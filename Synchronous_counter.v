@@ -1,3 +1,4 @@
+// Mach dem dong bo su dung module my_dff va thuc hien theo phuong phap structural
 module Synchronous_counter (clk,clr,pre,state);
 input clk;
 input [2:0] clr,pre;
